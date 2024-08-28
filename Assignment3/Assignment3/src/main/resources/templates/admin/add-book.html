@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Library Database</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div sec:authorize="hasRole('ADMIN')" class="container">
+    <h1>Add New Book</h1>
+    <form action="#" th:action="@{/book/new}" th:object="${book}" method="post">
+        <div>
+            <label for="title">Title: </label>
+            <input id="title" type="text" th:field="*{title}" name="title" required>
+        </div>
+        <div class="mt-1">
+            <label for="author">Author: </label>
+            <input id="author" type="text" th:field="*{author}" name="author" required>
+        </div>
+
+        <button class="mt-1" type="submit">Add Book!</button>
+    </form>
+
+    <button sec:authorize="isAuthenticated()" class="mt-1" type="button">
+        <a style="text-decoration: none" th:href="@{/logout}">Logout</a>
+    </button>
+
+    <div class="mt-1">
+        <a href="/">Back to index</a>
+    </div>
+</div>
+
+</body>
+</html>

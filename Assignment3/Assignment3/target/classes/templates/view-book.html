@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>View Book</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${'Reviews for ' + book.title + ' by ' + book.author}"></h1>
+    <h3 th:if="${book.reviews.size() == 0}">No reviews yet. Be the first to review it!</h3>
+    <ul th:each="review : ${book.reviews}">
+        <li th:text="${review.text}"></li>
+    </ul>
+
+    <div sec:authorize="isAuthenticated()" class="mt-1">
+        <a th:href="${'/book/review/add/' + book.id}">Add a review</a>
+
+        <div class="mt-1">
+            <a style="text-decoration: none" th:href="@{/logout}">
+                <button type="button">Logout</button>
+            </a>
+        </div>
+    </div>
+
+    <div sec:authorize="!isAuthenticated()" class="mt-1">
+        <span>
+            Want to leave a review?
+        </span>
+        <a href="/login">Login here</a>
+    </div>
+
+    <div class="mt-1">
+        <a href="/">Back to index</a>
+    </div>
+
+</div>
+</body>
+</html>
